@@ -1004,7 +1004,7 @@ wait_for_seqfile(const char *seq)
 			dbg2("%s waiting for '%s'", curtime(), seqbuf);
 			do_once = 0;
 		}
-		if (sigtimedwait(&set_CHLD, NULL, &ts) >= 0) {
+		if (__rt_sigtimedwait(&set_CHLD, NULL, &ts, sizeof(sigset_t)) >= 0) {
 			dbg3("woken up");
 			continue; /* don't decrement timeout! */
 		}

@@ -73,7 +73,8 @@ ifeq ($(TARGET_ARCH),arm)
 	android/libc/arch-arm/syscalls/stime.S \
 	android/libc/arch-arm/syscalls/swapon.S \
 	android/libc/arch-arm/syscalls/swapoff.S \
-	android/libc/arch-arm/syscalls/sysinfo.S
+	android/libc/arch-arm/syscalls/sysinfo.S \
+	android/libc/arch-arm/syscalls/__rt_sigtimedwait.S
 endif
 
 ifeq ($(TARGET_ARCH),mips)
@@ -201,3 +202,5 @@ LOCAL_MODULE_PATH := $(PRODUCT_OUT)/utilities
 LOCAL_UNSTRIPPED_PATH := $(PRODUCT_OUT)/symbols/utilities
 $(LOCAL_MODULE): busybox_prepare
 include $(BUILD_EXECUTABLE)
+
+.NOTPARALLEL: .PHONY
