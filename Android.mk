@@ -4,6 +4,9 @@ BB_PATH := $(LOCAL_PATH)
 # Bionic Branches Switches (CM7/AOSP/ICS)
 BIONIC_ICS := true
 
+# BB doesn't explicitly state a dependency on bionic's libm
+# State it here to allow a minimal build.
+BB_DEPS: libm
 
 # Make a static library for regex.
 include $(CLEAR_VARS)
@@ -37,7 +40,7 @@ include $(CLEAR_VARS)
 
 KERNEL_MODULES_DIR ?= /system/lib/modules
 BUSYBOX_CONFIG := minimal full
-$(BUSYBOX_CONFIG):
+$(BUSYBOX_CONFIG): $(BB_DEPS)
 	@echo -e ${CL_PFX}"prepare config for busybox $@ profile"${CL_RST}
 	@cd $(BB_PATH) && make clean
 	@cd $(BB_PATH) && git clean -f -- ./include-$@/
@@ -202,5 +205,3 @@ LOCAL_MODULE_PATH := $(PRODUCT_OUT)/utilities
 LOCAL_UNSTRIPPED_PATH := $(PRODUCT_OUT)/symbols/utilities
 $(LOCAL_MODULE): busybox_prepare
 include $(BUILD_EXECUTABLE)
-
-.NOTPARALLEL: .PHONY
