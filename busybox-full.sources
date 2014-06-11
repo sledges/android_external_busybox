@@ -33,6 +33,8 @@ networking/arp.c networking/brctl.c networking/dnsd.c networking/ifconfig.c netw
 networking/libiproute/ip_parse_common_args.c networking/libiproute/ipaddress.c networking/libiproute/iplink.c networking/libiproute/iproute.c networking/libiproute/iprule.c networking/libiproute/libnetlink.c networking/libiproute/ll_addr.c networking/libiproute/ll_map.c networking/libiproute/ll_proto.c networking/libiproute/ll_types.c networking/libiproute/rt_names.c networking/libiproute/rtm_map.c networking/libiproute/utils.c networking/nbd-client.c networking/ifupdown.c networking/ftpgetput.c
 networking/nslookup.c
 
+networking/udhcp/arpping.c networking/udhcp/dhcpd.c networking/udhcp/packet.c networking/udhcp/common.c networking/udhcp/dhcprelay.c networking/udhcp/signalpipe.c networking/udhcp/d6_dhcpc.c networking/udhcp/domain_codec.c networking/udhcp/socket.c networking/udhcp/d6_packet.c networking/udhcp/dumpleases.c networking/udhcp/static_leases.c networking/udhcp/d6_socket.c networking/udhcp/files.c networking/udhcp/leases.c
+
 procps/free.c procps/fuser.c procps/kill.c procps/pgrep.c procps/pidof.c procps/ps.c procps/renice.c procps/sysctl.c procps/top.c procps/uptime.c procps/watch.c
 procps/pmap.c procps/iostat.c procps/mpstat.c
 procps/lsof.c procps/pstree.c procps/pwdx.c
@@ -43,8 +45,11 @@ util-linux/blkid.c util-linux/blockdev.c util-linux/dmesg.c util-linux/fdisk.c u
 util-linux/hexdump.c util-linux/losetup.c util-linux/lspci.c util-linux/lsusb.c
 util-linux/mkfs_ext2.c util-linux/mkfs_vfat.c util-linux/mkswap.c
 util-linux/more.c util-linux/mount.c util-linux/rdev.c util-linux/rev.c util-linux/swaponoff.c util-linux/umount.c
+util-linux/mdev.c util-linux/switch_root.c
 
 util-linux/volume_id/get_devname.c util-linux/volume_id/volume_id.c util-linux/volume_id/util.c util-linux/volume_id/ext.c
 util-linux/volume_id/fat.c util-linux/volume_id/iso9660.c util-linux/volume_id/ntfs.c util-linux/volume_id/linux_swap.c
 util-linux/volume_id/exfat.c util-linux/volume_id/squashfs.c
+
+util-linux/volume_id/btrfs.c
 
