@@ -4,6 +4,10 @@ BB_PATH := $(LOCAL_PATH)
 # Bionic Branches Switches (CM7/AOSP/ICS)
 BIONIC_ICS := true
 
+# BB doesn't explicitly state a dependency on bionic's libm
+# State it here to allow a minimal build.
+BB_DEPS: libm
+ 
 
 # Make a static library for regex.
 include $(CLEAR_VARS)
@@ -46,7 +50,7 @@ endif
 
 KERNEL_MODULES_DIR ?= /system/lib/modules
 BUSYBOX_CONFIG := minimal full
-$(BUSYBOX_CONFIG):
+$(BUSYBOX_CONFIG): $(BB_DEPS)
 	@echo -e ${CL_PFX}"prepare config for busybox $@ profile"${CL_RST}
 	@cd $(BB_PATH) && make clean
 	@cd $(BB_PATH) && git clean -f -- ./include-$@/
@@ -83,7 +87,8 @@ ifeq ($(TARGET_ARCH),arm)
 	android/libc/arch-arm/syscalls/stime.S \
 	android/libc/arch-arm/syscalls/swapon.S \
 	android/libc/arch-arm/syscalls/swapoff.S \
-	android/libc/arch-arm/syscalls/sysinfo.S
+	android/libc/arch-arm/syscalls/sysinfo.S \
+	android/libc/arch-arm/syscalls/__rt_sigtimedwait.S
 endif
 
 ifeq ($(TARGET_ARCH),x86)
