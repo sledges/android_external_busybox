@@ -49,7 +49,7 @@ $(busybox_prepare_full): $(BB_PATH)/busybox-full.config
 	@rm -f $(shell find $(abspath $(call intermediates-dir-for,EXECUTABLES,busybox)) -name "*.o")
 	@mkdir -p $(@D)
 	@cat $^ > $@ && echo "CONFIG_CROSS_COMPILER_PREFIX=\"$(BUSYBOX_CROSS_COMPILER_PREFIX)\"" >> $@
-	+make -C $(BB_PATH) prepare O=$(@D) $(BB_PREPARE_FLAGS)
+	make -C $(BB_PATH) prepare O=$(@D) $(BB_PREPARE_FLAGS)
 
 busybox_prepare_minimal := $(bb_gen)/minimal/.config
 $(busybox_prepare_minimal): $(BB_PATH)/busybox-minimal.config
@@ -58,7 +58,7 @@ $(busybox_prepare_minimal): $(BB_PATH)/busybox-minimal.config
 	@rm -f $(shell find $(abspath $(call intermediates-dir-for,STATIC_LIBRARIES,libbusybox)) -name "*.o")
 	@mkdir -p $(@D)
 	@cat $^ > $@ && echo "CONFIG_CROSS_COMPILER_PREFIX=\"$(BUSYBOX_CROSS_COMPILER_PREFIX)\"" >> $@
-	+make -C $(BB_PATH) prepare O=$(@D) $(BB_PREPARE_FLAGS)
+	make -C $(BB_PATH) prepare O=$(@D) $(BB_PREPARE_FLAGS)
 
 
 #####################################################################
@@ -67,8 +67,6 @@ LOCAL_PATH := $(BB_PATH)
 include $(CLEAR_VARS)
 
 KERNEL_MODULES_DIR ?= /system/lib/modules
-
-SUBMAKE := make -s -C $(BB_PATH) CC=$(CC)
 
 BUSYBOX_SRC_FILES = \
 	$(shell cat $(BB_PATH)/busybox-$(BUSYBOX_CONFIG).sources) \
@@ -98,6 +96,7 @@ BUSYBOX_C_INCLUDES = \
 	$(BB_PATH)/android/regex \
 	$(BB_PATH)/android/librpc
 
+BB_VER := 1.22.1
 BUSYBOX_CFLAGS = \
 	-Werror=implicit -Wno-clobbered \
 	-DNDEBUG \
@@ -106,7 +105,7 @@ BUSYBOX_CFLAGS = \
 	-fno-builtin-stpcpy \
 	-include $(bb_gen)/$(BUSYBOX_CONFIG)/include/autoconf.h \
 	-D'CONFIG_DEFAULT_MODULES_DIR="$(KERNEL_MODULES_DIR)"' \
-	-D'BB_VER="$(strip $(shell $(SUBMAKE) kernelversion)) $(BUSYBOX_SUFFIX)"' -DBB_BT=AUTOCONF_TIMESTAMP
+	-D'BB_VER="$(BB_VER) $(BUSYBOX_SUFFIX)"' -DBB_BT=AUTOCONF_TIMESTAMP
 
 ifeq ($(BIONIC_L),true)
     BUSYBOX_CFLAGS += -DBIONIC_L
