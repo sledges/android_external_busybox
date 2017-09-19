@@ -74,6 +74,7 @@ BUSYBOX_C_INCLUDES = \
 
 BB_VER := 1.22.1
 BUSYBOX_CFLAGS := $(BIONIC_CFLAGS) \
+	-Wno-ignored-attributes \
 	-Werror=implicit -Wno-clobbered \
 	-DNDEBUG \
 	-fno-strict-aliasing \
