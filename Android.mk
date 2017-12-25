@@ -109,9 +109,9 @@ LOCAL_C_INCLUDES := $(dir $(busybox_autoconf_minimal_h)) $(BUSYBOX_C_INCLUDES)
 LOCAL_GENERATED_SOURCES := $(busybox_autoconf_minimal_h)
 $(busybox_autoconf_minimal_h): $(BB_PATH)/busybox-minimal.config
 	@echo -e ${CL_YLW}"Prepare config for libbusybox"${CL_RST}
-	@rm -rf $(dir $($D)) $(local-intermediates-dir)
+	@rm -rf $(dir $(@D)) $(shell find $(call intermediates-dir-for,STATIC_LIBRARIES,libbusybox) -name "*.o")
 	@mkdir -p $(@D)
-	$(hide) ( cat $^ && echo "CONFIG_CROSS_COMPILER_PREFIX=\"$(BUSYBOX_CROSS_COMPILER_PREFIX)\"" ) > $(dir $($D)).config
+	$(hide) ( cat $^ && echo "CONFIG_CROSS_COMPILER_PREFIX=\"$(BUSYBOX_CROSS_COMPILER_PREFIX)\"" ) > $(dir $(@D)).config
 	make -C $(BB_PATH) prepare O=$(abspath $(dir $(@D))) $(BB_PREPARE_FLAGS)
 
 include $(BUILD_STATIC_LIBRARY)
@@ -137,7 +137,7 @@ LOCAL_C_INCLUDES := $(dir $(busybox_autoconf_full_h)) $(BUSYBOX_C_INCLUDES)
 LOCAL_GENERATED_SOURCES := $(busybox_autoconf_full_h)
 $(busybox_autoconf_full_h): $(BB_PATH)/busybox-full.config
 	@echo -e ${CL_YLW}"Prepare config for busybox binary"${CL_RST}
-	@rm -rf $(dir $($D)) $(local-intermediates-dir)
+	@rm -rf $(dir $(@D)) $(shell find $(call intermediates-dir-for,EXECUTABLES,busybox) -name "*.o")
 	@mkdir -p $(@D)
 	$(hide) ( cat $^ && echo "CONFIG_CROSS_COMPILER_PREFIX=\"$(BUSYBOX_CROSS_COMPILER_PREFIX)\"" ) > $(dir $(@D)).config
 	make -C $(BB_PATH) prepare O=$(abspath $(dir $(@D))) $(BB_PREPARE_FLAGS)
